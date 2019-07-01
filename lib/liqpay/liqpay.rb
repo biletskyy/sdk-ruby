@@ -50,6 +50,13 @@ module Liqpay
       HTML_FORM % [client.endpoint('3/checkout'), data, signature, language]
     end
 
+    def data_and_sign(params)
+      params = normalize_and_check(params, {}, :version, :amount, :currency, :description)
+      language = params[:language] || 'ru'
+
+      data_and_signature(params)
+    end
+
     def match?(data, signature)
       signature == encode_signature(data)
     end
